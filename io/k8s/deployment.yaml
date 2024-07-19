@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example_app
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: example_app
+  template:
+    metadata:
+      labels:
+        role: example_app
+    spec:
+      containers:
+      - name: example_app
+        image: example:lastest
+        imagePullPolicy: Always
+        resources: null
+        ports:
+        - containerPort: 1003
+        envFrom:
+        - configMapRef:
+            name: example_app_env
+        - secretRef:
+            name: example_app_secret
+      dnsPolicy: Default
